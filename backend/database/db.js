@@ -1,0 +1,1 @@
+module.exports = {db: "mongodb+srv://no1admin:A40I8S66qFqHpWGc@no1-cluster.ith5u4n.mongodb.net/?retryWrites=true&w=majority"};
