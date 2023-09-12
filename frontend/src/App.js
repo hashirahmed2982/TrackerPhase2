@@ -22,6 +22,7 @@ const App = () => {
 
   useEffect(() => {
     getUser();
+	
     
   }, [user,userdata]);
   const getUser = () => {
