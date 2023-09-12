@@ -207,7 +207,7 @@ const requestSearch = (event) => {
 
           <br/>
 
-          <Paper >
+          
     <Stack direction="row"
               justifyContent="space-between"
               spacing={1}>
@@ -252,12 +252,12 @@ const requestSearch = (event) => {
             </MenuItem>
           ))}
         </TextField>
-    <Grid>
+    
     <FormDialog userdata={userdata} catdata={catdata} waldata={waldata} comdata={comdata}/>
-                </Grid>
+                
                 </Stack>
                 
-  </Paper>
+  
           <DynamicTable TableData={rows} tranurl={tranurl} comdata={comdata} url={url} catdata={catdata} waldata={waldata} column={usercolumn}/>
         </Container></Box></>
     );
