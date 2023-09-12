@@ -74,7 +74,7 @@ function DynamicTable({ TableData ,url ,catdata,waldata ,comdata, column, height
     .then((res) => {
       if (res.status === 200) {
         toast.success("Transaction successfully deleted");
-        
+        window.location.reload();
 
       } else Promise.reject();
     })
@@ -113,7 +113,7 @@ function DynamicTable({ TableData ,url ,catdata,waldata ,comdata, column, height
 	.then((res) => {
 		if (res.status === 200) {
       toast.success("Transaction successfully updated");
-      
+      window.location.reload();
 		
 		} else Promise.reject();
 	})

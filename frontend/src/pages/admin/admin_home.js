@@ -24,6 +24,8 @@ function HomeAdmin() {
   const [userdata, setuserdata] = useState([]);
   const [catdata, setcatdata] = useState([]);
   const [waldata, setwaldata] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [searched, setSearched] = useState("");
   const [comdata, setcomdata] = useState([]);
   const [ready, setready] = useState(false);
   const [com, setcom] = useState({company: "ALL"});
@@ -38,6 +40,7 @@ function HomeAdmin() {
     if(com['company'] === "ALL"){
       axios.get(tranurl,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
         setdatas(data);
+        setRows(data);
       })
       .catch((error) => {
         console.log(error);
@@ -47,6 +50,7 @@ function HomeAdmin() {
       console.log("front",com)
       axios.post(adminurl,com).then(({ data }) => {
         setdatas(data);
+        setRows(data);
       })
       .catch((error) => {
         console.log(error);
@@ -61,12 +65,13 @@ function HomeAdmin() {
     getCompanyData();
     getUser();
     
-  }, [com,datas]);
+  }, []);
 
  
   const handleFormChange = (event) => {
     com['company'] = event.target.value 
     setcom({...com});
+    gettable()
  }
 
  
@@ -109,6 +114,24 @@ const getWalData = () => {
         console.log(error);
       });
 	
+};
+const requestSearch = (event) => {
+  setSearched(event.target.value);
+  console.log("search",event.target.value)
+  if(event.target.value === ""){
+    setSearched("");
+    setRows(datas);
+    
+
+  }
+  else{
+    const filteredRows = datas.filter((row) => {
+      return row.description.includes(event.target.value);
+    });
+    setRows(filteredRows);
+  }
+  
+  console.log("filtered",rows)
 };
 
   let incomeVal = 0;
@@ -189,7 +212,9 @@ const getWalData = () => {
               justifyContent="space-between"
               spacing={1}>
     <OutlinedInput
-      defaultValue=""
+      value={searched}
+      onChange={(e) => requestSearch(e)}
+          
       fullWidth
       placeholder="Search "
       startAdornment={(
@@ -233,7 +258,7 @@ const getWalData = () => {
                 </Stack>
                 
   </Paper>
-          <DynamicTable TableData={datas} tranurl={tranurl} comdata={comdata} url={url} catdata={catdata} waldata={waldata} column={usercolumn}/>
+          <DynamicTable TableData={rows} tranurl={tranurl} comdata={comdata} url={url} catdata={catdata} waldata={waldata} column={usercolumn}/>
         </Container></Box></>
     );
   }
