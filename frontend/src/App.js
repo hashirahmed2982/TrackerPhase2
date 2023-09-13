@@ -12,6 +12,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { userurl } from "./components/url";
 import Settings from './pages/admin/settings';
+import Account from './pages/account/account';
 
 
 
@@ -25,9 +26,9 @@ const App = () => {
 	
     
   }, [user,userdata]);
-  const getUser = () => {
+  const getUser = async () => {
 	if(user){
-		axios.get(userurl,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
+		await axios.get(userurl,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
 			setuserdata(data[0]['role']);
 			console.log("changed ",userdata)
 		  })
@@ -62,7 +63,11 @@ const App = () => {
 							/>
 							<Route
 								path="/settings"
-								element={ user && userdata === 'admin'?<Settings user={user} />:<div>no user</div> }
+								element={ user && userdata === 'admin'?<Settings user={user} />:<Navigate to="/login"/> }
+							/>
+							<Route
+								path="/account"
+								element={<Account user={userdata} /> }
 							/>
 							
 

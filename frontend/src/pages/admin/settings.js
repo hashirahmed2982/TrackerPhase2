@@ -10,6 +10,8 @@ import AddComp from "../../table/settingsAdd/addComp";
 import AddCat from "../../table/settingsAdd/addCat";
 import AddWall from "../../table/settingsAdd/addWall";
 import { usersurl,comurl,caturl,walurl } from "../../components/url";
+import "../../components/loader/style.css"
+import Spinner from "../../components/loader/spinner";
 
 
 
@@ -30,24 +32,28 @@ function Settings({ user }) {
     // console.log(user)
 
   
-
-
-
-    useEffect(() => {
-        axios.get(usersurl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
+    const getUserData = async () => {
+        await axios.get(usersurl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
             setUserData(data);
         })
             .catch((error) => {
                 console.log(error);
             });
+
+    };
+
+
+    useEffect(() => {
+        
         // getCatData();
+        getUserData();
         getCompData();
         getCatData();
         getWalData();
-    }, [userDatas,walDatas,catDatas,compDatas]);
+    }, []);
 
-    const getCompData = () => {
-        axios.get(comurl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
+    const getCompData = async () => {
+        await axios.get(comurl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
             setCompData(data);
             // setready(true);
         })
@@ -56,8 +62,8 @@ function Settings({ user }) {
             });
 
     };
-    const getCatData = () => {
-        axios.get(caturl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
+    const getCatData = async() => {
+        await axios.get(caturl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
             setCatData(data);
 
         })
@@ -66,8 +72,8 @@ function Settings({ user }) {
             });
 
     };
-    const getWalData = () => {
-        axios.get(walurl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
+    const getWalData = async() => {
+        await axios.get(walurl, { headers: { 'Authorization': 'Bearer ' + user['token'] }, }).then(({ data }) => {
             setWalData(data);
 
         })
@@ -132,7 +138,9 @@ function Settings({ user }) {
     }
     else {
         return (
-            "Loading..."
+            <div className="pos-center">
+      <Spinner />
+    </div>
         );
     }
 }

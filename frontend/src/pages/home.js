@@ -6,6 +6,8 @@ import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import {  InputAdornment, OutlinedInput, Paper, SvgIcon ,Button, Stack} from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon'
 import FormDialog from '../table/add';
+import "../components/loader/style.css"
+import Spinner from "../components/loader/spinner";
 import {
   Box,
   Container
@@ -24,6 +26,8 @@ function Home() {
   const [waldata, setwaldata] = useState([]);
   const [ready, setready] = useState(false);
   const [rows, setRows] = useState([]);
+  const [stat, setstat] = useState("initial");
+  
   const [searched, setSearched] = useState("");
   const usercolumn = [
     "Transid",
@@ -38,8 +42,8 @@ function Home() {
 
   const { user } = useAuthContext();
   console.log(user);
-  const gettable = () => {
-    axios.get(url,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
+  const gettable =  async () => {
+     await axios.get(url,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
       setdatas(data);
       setRows(data);
     })
@@ -48,14 +52,16 @@ function Home() {
     });
   };
   useEffect(() => {
+    if(user){
     gettable();
     getCatData();
     getWalData();
     getUser();
-  }, []);
+    }
+  }, [user]);
 
-  const getUser = () => {
-    axios
+  const getUser = async () => {
+   await axios
       .get(userurl, { headers: { Authorization: "Bearer " + user["token"] } })
       .then(({ data }) => {
         setuserdata(data);
@@ -89,8 +95,8 @@ function Home() {
     requestSearch(searched);
   };
 
-  const getCatData = () => {
-    axios
+  const getCatData = async () => {
+    await axios
       .get(caturl)
       .then(({ data }) => {
         setcatdata(data);
@@ -100,8 +106,8 @@ function Home() {
       });
   };
 
-  const getWalData = () => {
-    axios
+  const getWalData = async () => {
+    await axios
       .get(walurl)
       .then(({ data }) => {
         setwaldata(data);
@@ -210,7 +216,11 @@ function Home() {
       </>
     );
   } else {
-    return "no data found";
+    return (
+      <div className="pos-center">
+      <Spinner />
+    </div>
+    );
   }
 }
 

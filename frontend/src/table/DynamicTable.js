@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -28,7 +28,8 @@ function DynamicTable({ TableData ,url ,catdata,waldata ,comdata, column, height
   const {user} = useAuthContext(); 
   //dynamic object to store edit variable values
   var [obj, setobj] = useState(TableData);
-
+  useEffect(() => {
+  }, [TableData]);
   if (!height) {
     height = 400;
   } 

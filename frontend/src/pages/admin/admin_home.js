@@ -2,11 +2,12 @@
 import DynamicTable from "../../table/DynamicTable"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Topcard from "../../components/topcard";
+
 import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
 import {  Unstable_Grid2 as Grid } from '@mui/material';
 import { OverviewTotalProfit } from "../../components/topcard";
-import AdminRow from "../../components/admin-row";
+import "../../components/loader/style.css"
+import Spinner from "../../components/loader/spinner";
 import ResponsiveAppBar from "../../components/navbar";
 import { useAuthContext } from "../../components/hooks/useAuthContext";
 import { tranurl,userurl,caturl,walurl,comurl,adminurl,url } from "../../components/url";
@@ -34,11 +35,11 @@ function HomeAdmin() {
   
   const {user} = useAuthContext();
   console.log(user) 
-  const gettable = () => {
+  const gettable = async () => {
     
     
     if(com['company'] === "ALL"){
-      axios.get(tranurl,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
+      await axios.get(tranurl,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
         setdatas(data);
         setRows(data);
       })
@@ -48,7 +49,7 @@ function HomeAdmin() {
     }
     else{
       console.log("front",com)
-      axios.post(adminurl,com).then(({ data }) => {
+      await axios.post(adminurl,com).then(({ data }) => {
         setdatas(data);
         setRows(data);
       })
@@ -85,8 +86,8 @@ function HomeAdmin() {
       });
 	
 };
-const getCatData = () => {
-	axios.get(caturl).then(({ data }) => {
+const getCatData = async () => {
+	await axios.get(caturl).then(({ data }) => {
         setcatdata(data);
         
       })
@@ -95,8 +96,8 @@ const getCatData = () => {
       });
 	
 };
-const getCompanyData = () => {
-	axios.get(comurl).then(({ data }) => {
+const getCompanyData = async () => {
+	 await axios.get(comurl).then(({ data }) => {
         setcomdata(data);
         
       })
@@ -105,8 +106,8 @@ const getCompanyData = () => {
       });
 	
 };
-const getWalData = () => {
-	axios.get(walurl).then(({ data }) => {
+const getWalData = async () => {
+	await axios.get(walurl).then(({ data }) => {
         setwaldata(data);
         
       })
@@ -264,7 +265,9 @@ const requestSearch = (event) => {
   }
   else{
     return(
-      "no data found"
+      <div className="pos-center">
+      <Spinner />
+    </div>
     );
   }
 }
