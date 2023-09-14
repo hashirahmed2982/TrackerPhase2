@@ -64,7 +64,7 @@ function Home() {
    await axios
       .get(userurl, { headers: { Authorization: "Bearer " + user["token"] } })
       .then(({ data }) => {
-        setuserdata(data);
+        setuserdata(data[0]);
         setready(true);
       })
       .catch((error) => {

@@ -25,13 +25,13 @@ export const neutral = {
 };
 
 export const header = {
-  background: '#030ba1b7',
+  background: '#0380ff',
 };
 export const indigo = withAlphas({
   lightest: '#F5F7FF',
   light: '#EBEEFE',
-  main: '#6366F1',
-  dark: '#4338CA',
+  main: '#0380ff',
+  dark: '#004a95',
   darkest: '#312E81',
   contrastText: '#FFFFFF'
 });

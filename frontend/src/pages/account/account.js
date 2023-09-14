@@ -5,22 +5,26 @@ import { AccountProfile } from './account-profile';
 import { AccountProfileDetails } from './account-profile-details';
 
 import { useAuthContext } from '../../components/hooks/useAuthContext';
+import ResponsiveAppBar from '../../components/navbar';
 
-const Account = () => (
+const Account = ({userdata , user}) => (
+    console.log("userdata",userdata),
+  
   <>
-    
+     <ResponsiveAppBar userdata={userdata} />
+        <br />
     <Box
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8
+        py: 4
       }}
     >
       <Container maxWidth="lg">
         <Stack spacing={3}>
           <div>
             <Typography variant="h4">
-              Account
+              My Profile
             </Typography>
           </div>
           <div>
@@ -33,14 +37,14 @@ const Account = () => (
                 md={6}
                 lg={4}
               >
-                <AccountProfile />
+                <AccountProfile userdata={userdata}/>
               </Grid>
               <Grid
                 xs={12}
                 md={6}
                 lg={8}
               >
-                <AccountProfileDetails />
+                <AccountProfileDetails userdata={userdata} user={user}/>
               </Grid>
             </Grid>
           </div>

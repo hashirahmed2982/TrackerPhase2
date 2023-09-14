@@ -19,7 +19,7 @@ import Account from './pages/account/account';
 const App = () => {
   const theme = createTheme();
   const {user} = useAuthContext();
-  const [userdata, setuserdata] = useState(null);
+  const [userdata, setuserdata] = useState([]);
 
   useEffect(() => {
     getUser();
@@ -29,7 +29,7 @@ const App = () => {
   const getUser = async () => {
 	if(user){
 		await axios.get(userurl,{headers: {'Authorization': 'Bearer ' + user['token']},}).then(({ data }) => {
-			setuserdata(data[0]['role']);
+			setuserdata(data[0]);
 			console.log("changed ",userdata)
 		  })
 		  .catch((error) => {
@@ -59,15 +59,15 @@ const App = () => {
 							/>
 							<Route
 								path="/home"
-								element={user && userdata === 'admin'? <HomeAdmin /> :user ? <Home />: <Navigate to="/login"/>}
+								element={user && userdata['role'] === 'admin'? <HomeAdmin /> :user ? <Home />: <Navigate to="/login"/>}
 							/>
 							<Route
 								path="/settings"
-								element={ user && userdata === 'admin'?<Settings user={user} />:<Navigate to="/login"/> }
+								element={ user && userdata['role'] === 'admin'?<Settings user={user} />:<Navigate to="/login"/> }
 							/>
 							<Route
 								path="/account"
-								element={<Account user={userdata} /> }
+								element={ user && userdata ?<Account userdata={userdata} user={user}/>:<Navigate to="/login"/> }
 							/>
 							
 

@@ -64,8 +64,8 @@ export default function FormDialog({userdata,catdata,waldata,comdata}) {
   const currentDate = new Date();
   Transaction['user_id'] = userdata[0]['_id'];
   Transaction['user'] = userdata[0]['name'];
-  if(userdata[0]['role'] !== 'admin'){
-    Transaction['company'] = userdata[0]['company'];
+  if(userdata['role'] !== 'admin'){
+    Transaction['company'] = userdata['company'];
   }
   
   
@@ -248,7 +248,7 @@ export default function FormDialog({userdata,catdata,waldata,comdata}) {
             </MenuItem>
           ))}
         </TextField>
-        {userdata[0]['role']==='admin'?
+        {userdata['role']==='admin'?
         <TextField
         required
         id="outlined-select"

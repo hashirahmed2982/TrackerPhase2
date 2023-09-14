@@ -67,13 +67,13 @@
   margin-top: 25px;
   margin-left: 35%;
   border-radius: 5px;
-  background-color: #030ba1b7;
+  background-color: #0380ff;
   -webkit-transition: background-color 300ms;
   -moz-transition: background-color 300ms;
   transition: background-color 300ms;
 }
 .login > button:hover {
-  background-color: #321f9f;
+  background-color: #004a95;
 }
 
 
